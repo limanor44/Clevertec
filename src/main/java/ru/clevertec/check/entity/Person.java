@@ -1,5 +1,7 @@
 package main.java.ru.clevertec.check.entity;
 
+import main.java.ru.clevertec.check.interfaces.Buyer;
+
 import java.util.List;
 
 public class Person implements Buyer {
