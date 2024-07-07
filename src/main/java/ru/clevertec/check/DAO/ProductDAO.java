@@ -71,12 +71,4 @@ public class ProductDAO implements Crud<Product> {
         sc.close();
         return products;
     }
-
-    public ArrayList<Product> getProducts(HashMap<Integer, Integer> products){
-        ArrayList<Product> list = new ArrayList<>();
-        for (Integer o :products.keySet()){
-            //list.add()
-        }
-        return null;
-    }
 }
