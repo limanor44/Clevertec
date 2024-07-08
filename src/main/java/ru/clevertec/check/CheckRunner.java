@@ -1,36 +1,31 @@
 package main.java.ru.clevertec.check;
 
 import main.java.ru.clevertec.check.DAO.DiscountCardDAO;
-import main.java.ru.clevertec.check.DAO.ProductDAO;
 import main.java.ru.clevertec.check.entity.*;
 
-import java.io.*;
 import java.util.*;
 
 public class CheckRunner {
 
-
     public static void main(String[] args) {
         try {
-            initial(args);
+            Check check = initial(args);
+            check.printCheck();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-    }
-
-    public static void run(String[] args) {
-        //initial(args);
     }
 
     public static Check initial(String[] args) throws Exception {
+        if (args.length == 0) {
+            throw new Exception("BAD REQUEST");
+        }
         HashMap<Integer, Integer> products = new HashMap<>();
         int discountCardNumber = 0;
         int balanceDebitCard = 0;
         for (int i = 0; i < args.length; i++) {
             String[] strings = args[i].split("-");
-            if ((args[i].contains("-") && strings.length < 2) ||
-                    (args[i].contains("=") && args[i].split("=").length < 2)) {
+            if ((args[i].contains("-") && strings.length < 2) || (args[i].contains("=") && args[i].split("=").length < 2)) {
                 throw new Exception("BAD REQUEST");
             }
             try {
@@ -46,19 +41,14 @@ public class CheckRunner {
                 } else if (args[i].contains("balanceDebitCard")) {
                     balanceDebitCard = Integer.parseInt(args[i].split("=")[1]);
                 }
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 throw new Exception("BAD REQUEST");
             }
         }
-        System.out.println(Product.getProductsList(products));
         ArrayList<Product> productArrayList = Product.getProductsList(products);
         DiscountCard discountCard = new DiscountCardDAO().getByNumber(discountCardNumber);
         ArrayList<CheckProduct> checkProducts = new CheckProduct().createCheckProducts(productArrayList, discountCard);
-        Check check = new Check(
-                checkProducts,
-                discountCard,
-                balanceDebitCard
-        );
+        Check check = new Check(checkProducts, discountCard, balanceDebitCard);
         return check;
     }
 }

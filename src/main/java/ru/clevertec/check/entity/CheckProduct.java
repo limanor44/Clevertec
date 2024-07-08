@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class CheckProduct {
 
-    private final int DISCOUNTIFPRODUCTISWHOLESALE = 9;
-    private final int DISCOUNTIFTHEREDISCOUNTCARD = 2;
+    private static final int DISCOUNTIFPRODUCTISWHOLESALE = 10;
+    private static final int DISCOUNTIFTHEREDISCOUNTCARD = 2;
 
     private Product product;
     private double discount;
@@ -69,6 +69,32 @@ public class CheckProduct {
     private void calculationDiscount(Product product, int discountProduct) {
         totalPrice = product.getPrice() * product.getQuantity();
         totalPriceWithDiscount = (double) Math.round(totalPrice * (1 - (double) discountProduct / 100) * 100) / 100;
-        discount = totalPrice - totalPriceWithDiscount;
+        discount = (double) Math.round((totalPrice - totalPriceWithDiscount) * 100) / 100;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public double getTotalPriceWithDiscount() {
+        return totalPriceWithDiscount;
+    }
+
+    @Override
+    public String toString() {
+        return "CheckProduct{" +
+                "product=" + product +
+                ", discount=" + discount +
+                ", totalPrice=" + totalPrice +
+                ", totalPriceWithDiscount=" + totalPriceWithDiscount +
+                '}';
     }
 }

@@ -26,13 +26,13 @@ public class ProductDAO implements Crud<Product> {
         Product product = null;
         while (sc.hasNext()) {
             int idProd = Integer.parseInt(sc.next().trim());
-            if(idProd == id){
+            if (idProd == id) {
                 product = new Product(
                         idProd,
                         sc.next().trim(),
                         Double.parseDouble(sc.next().trim().replace(',', '.')),
                         Integer.parseInt(sc.next().trim()),
-                        sc.next().trim() == "+"
+                        sc.next().trim().equals("+")
                 );
             } else {
                 sc.next();

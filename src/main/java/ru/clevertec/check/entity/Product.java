@@ -28,9 +28,9 @@ public class Product {
         Set<Integer> set = products.keySet();
         ProductDAO productDAO = new ProductDAO();
         ArrayList<Product> list = new ArrayList<>();
-        for(int o : set){
+        for (int o : set) {
             Product product = productDAO.getById(o);
-            if(product == null || product.quantity < products.get(o)){
+            if (product == null || product.quantity < products.get(o)) {
                 throw new Exception("BAD REQUEST");
             }
             product.quantity = products.get(o);

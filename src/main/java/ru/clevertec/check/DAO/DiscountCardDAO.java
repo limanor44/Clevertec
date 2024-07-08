@@ -1,6 +1,5 @@
 package main.java.ru.clevertec.check.DAO;
 
-import main.java.ru.clevertec.check.CheckRunner;
 import main.java.ru.clevertec.check.entity.DiscountCard;
 import main.java.ru.clevertec.check.interfaces.Crud;
 
@@ -26,13 +25,13 @@ public class DiscountCardDAO implements Crud<DiscountCard> {
         scanner.useDelimiter(";");
         while (scanner.hasNext()) {
             int idCard = Integer.parseInt(scanner.next().trim());
-            if(idCard == id){
+            if (idCard == id) {
                 discountCard = new DiscountCard(
                         idCard,
                         Integer.parseInt(scanner.next().trim()),
                         Integer.parseInt(scanner.next().trim())
                 );
-            } else{
+            } else {
                 scanner.next();
                 scanner.next();
             }
@@ -64,7 +63,7 @@ public class DiscountCardDAO implements Crud<DiscountCard> {
         return discountCards;
     }
 
-    public DiscountCard getByNumber(int number){
+    public DiscountCard getByNumber(int number) {
         Scanner scanner = null;
         try {
             scanner = new Scanner(new File(DISCOUNTCARDPATH));
@@ -76,13 +75,13 @@ public class DiscountCardDAO implements Crud<DiscountCard> {
         while (scanner.hasNext()) {
             int idCard = Integer.parseInt(scanner.next().trim());
             int numberCard = Integer.parseInt(scanner.next().trim());
-            if(number == numberCard){
+            if (number == numberCard) {
                 return new DiscountCard(
                         idCard,
                         number,
                         Integer.parseInt(scanner.next().trim())
                 );
-            } else{
+            } else {
                 scanner.next();
                 scanner.next();
             }
