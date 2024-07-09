@@ -13,13 +13,18 @@ import java.util.Scanner;
 public class ProductDAO implements Crud<Product> {
     private final static String PRODUCTPATH = "./src/main/resources/products.csv";
 
+
+    public Product getById(int id) throws Exception{
+        return getById(id,PRODUCTPATH);
+    }
+
     @Override
-    public Product getById(int id) {
+    public Product getById(int id, String path) throws Exception {
         Scanner sc = null;
         try {
-            sc = new Scanner(new File(PRODUCTPATH));
+            sc = new Scanner(new File(path));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new Exception("BAD REQUEST");
         }
         sc.skip("id;description price,\\$;quantity in stock;wholesale product;");
         sc.useDelimiter(";");
@@ -46,11 +51,15 @@ public class ProductDAO implements Crud<Product> {
         return product;
     }
 
-    @Override
     public ArrayList<Product> getAll() {
+        return getAll(PRODUCTPATH);
+    }
+
+    @Override
+    public ArrayList<Product> getAll(String path) {
         Scanner sc = null;
         try {
-            sc = new Scanner(new File(PRODUCTPATH));
+            sc = new Scanner(new File(path));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -64,7 +73,7 @@ public class ProductDAO implements Crud<Product> {
                             sc.next().trim(),
                             Double.parseDouble(sc.next().trim().replace(',', '.')),
                             Integer.parseInt(sc.next().trim()),
-                            sc.next().trim() == "+"
+                            sc.next().trim() == "+" || sc.next().trim() == "true"
                     )
             );
         }

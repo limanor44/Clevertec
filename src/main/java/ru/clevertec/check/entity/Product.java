@@ -1,7 +1,9 @@
 package main.java.ru.clevertec.check.entity;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import main.java.ru.clevertec.check.DAO.ProductDAO;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -25,18 +27,26 @@ public class Product {
     }
 
     public static ArrayList<Product> getProductsList(HashMap<Integer, Integer> products) throws Exception {
-        Set<Integer> set = products.keySet();
-        ProductDAO productDAO = new ProductDAO();
-        ArrayList<Product> list = new ArrayList<>();
-        for (int o : set) {
-            Product product = productDAO.getById(o);
-            if (product == null || product.quantity < products.get(o)) {
-                throw new Exception("BAD REQUEST");
+        return getProductsList(products, null);
+    }
+
+    public static ArrayList<Product> getProductsList(HashMap<Integer, Integer> products, String path) throws Exception {
+        try {
+            Set<Integer> set = products.keySet();
+            ProductDAO productDAO = new ProductDAO();
+            ArrayList<Product> list = new ArrayList<>();
+            for (int o : set) {
+                Product product = path == null ? productDAO.getById(o) : productDAO.getById(o, path);
+                if (product == null || product.quantity < products.get(o)) {
+                    throw new Exception("BAD REQUEST");
+                }
+                product.quantity = products.get(o);
+                list.add(product);
             }
-            product.quantity = products.get(o);
-            list.add(product);
+            return list;
+        }catch (FileNotFoundException ex){
+            throw new Exception("LOL");
         }
-        return list;
     }
 
     public int getId() {

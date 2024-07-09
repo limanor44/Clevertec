@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class Check {
 
+    private static final String SAVETOFILEPATH = "./result.csv";
+
     private ArrayList<CheckProduct> products;
     private DiscountCard discountCard;
     private double balanceDebitCard;
@@ -19,6 +21,10 @@ public class Check {
     }
 
     public void printCheck() throws Exception {
+        printCheck(SAVETOFILEPATH);
+    }
+
+    public void printCheck(String path) throws Exception {
         double totalPrice = 0;
         double totalDiscount = 0;
         double totalWithDiscount = 0;
@@ -47,7 +53,7 @@ public class Check {
                 + totalDiscount + "$;"
                 + totalWithDiscount + "$");
         System.out.print(stringBuilder);
-        try (FileOutputStream fileOutputStream = new FileOutputStream("./src/main/resources/check.csv")) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
             byte[] buffer = stringBuilder.toString().getBytes();
             fileOutputStream.write(buffer, 0, buffer.length);
         } catch (Exception ex) {

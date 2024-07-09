@@ -12,12 +12,16 @@ public class DiscountCardDAO implements Crud<DiscountCard> {
 
     private final static String DISCOUNTCARDPATH = "./src/main/resources/discountCards.csv";
 
-    @Override
     public DiscountCard getById(int id) {
+        return getById(id, DISCOUNTCARDPATH);
+    }
+
+    @Override
+    public DiscountCard getById(int id, String path) {
         Scanner scanner = null;
         DiscountCard discountCard = null;
         try {
-            scanner = new Scanner(new File(DISCOUNTCARDPATH));
+            scanner = new Scanner(new File(path));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -40,12 +44,16 @@ public class DiscountCardDAO implements Crud<DiscountCard> {
         return discountCard;
     }
 
+    public ArrayList<DiscountCard> getAll(){
+        return getAll(DISCOUNTCARDPATH);
+    }
+
     @Override
-    public ArrayList<DiscountCard> getAll() {
+    public ArrayList<DiscountCard> getAll(String path) {
         Scanner scanner = null;
         ArrayList<DiscountCard> discountCards = new ArrayList<>();
         try {
-            scanner = new Scanner(new File(DISCOUNTCARDPATH));
+            scanner = new Scanner(new File(path));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -64,9 +72,13 @@ public class DiscountCardDAO implements Crud<DiscountCard> {
     }
 
     public DiscountCard getByNumber(int number) {
+        return getByNumber(number, DISCOUNTCARDPATH);
+    }
+
+    public DiscountCard getByNumber(int number, String path) {
         Scanner scanner = null;
         try {
-            scanner = new Scanner(new File(DISCOUNTCARDPATH));
+            scanner = new Scanner(new File(path));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
